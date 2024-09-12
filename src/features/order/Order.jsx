@@ -1,5 +1,6 @@
 // Test ID: IIDSAT
 import { useFetcher, useLoaderData } from 'react-router-dom';
+
 import OrderItem from './OrderItem';
 
 import { getOrder } from '../../services/apiRestaurant';
@@ -9,6 +10,7 @@ import {
   formatDate,
 } from '../../utils/helpers';
 import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder';
 
 function Order() {
   const order = useLoaderData();
@@ -20,8 +22,6 @@ function Order() {
     },
     [fetcher]
   );
-
-
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
@@ -77,7 +77,7 @@ function Order() {
           />
         ))}
       </ul>
-  
+
       <div className="space-y-2 bg-stone-300 px-6 py-5">
         <p className="text-sm font-medium text-stone-600">
           Price pizza: {formatCurrency(orderPrice)}
@@ -91,6 +91,8 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }
